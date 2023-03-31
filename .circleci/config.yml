@@ -9,6 +9,18 @@ jobs:
       - checkout
       - run: echo "This is a test step"
 
+        
+  bundler-audit:
+   machine: true
+    steps:
+      - checkout
+
+      - run: docker run --rm -v $(pwd):/src -w /src hysnsec/bundle-audit check --format json --output bundle-audit-output.json
+
+      - store_artifacts:
+          path: bundle-audit-output.json
+          destination: bundler-audit-artifact
+
   integration:
     steps:
       - checkout
